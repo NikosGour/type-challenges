@@ -30,8 +30,7 @@
 */
 
 /* _____________ Your Code Here _____________ */
-
-type MyPick<T, K> = any
+type MyPick<T, K extends keyof T> = {[P in K]:T[P]};
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -41,7 +40,9 @@ type cases = [
   Expect<Equal<Expected2, MyPick<Todo, 'title' | 'completed'>>>,
   // @ts-expect-error
   MyPick<Todo, 'title' | 'completed' | 'invalid'>,
+  MyPick<Todo, 'title' | 'completed'>,
 ]
+type x = cases[3]
 
 interface Todo {
   title: string
